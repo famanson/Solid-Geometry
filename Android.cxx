@@ -143,14 +143,34 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
     left_arm_sphere_bottom = left_arm_sphere_bottom.colour(SV_GREEN);
 	
 	// Construct the legs:
+	double leg_radius = 0.8;
 	
+	sv_set leg_plane_top = sv_set(sv_plane(sv_point(3,0,0), sv_point(3,5,5), sv_point(3,3,0)));
+    leg_plane_top = leg_plane_top.colour(SV_GREEN);
 	
+	sv_set leg_plane_bottom = sv_set(sv_plane(sv_point(0.75,0,0), sv_point(0.75,3,0), sv_point(0.75,5,5)));
+    leg_plane_bottom = leg_plane_bottom.colour(SV_GREEN);
+
+	//Right leg:	
+	sv_set right_leg_cylinder = cylinder(sv_line(sv_point(1,0,0),sv_point(0,7.5,5)), leg_radius);
+	right_leg_cylinder = right_leg_cylinder.colour(SV_GREEN);
+	
+    sv_set right_leg_sphere_bottom = sphere(sv_point(0.75,7.5,5),leg_radius);
+    right_leg_sphere_bottom = right_leg_sphere_bottom.colour(SV_GREEN);
+	
+	// Left leg:
+	sv_set left_leg_cylinder = cylinder(sv_line(sv_point(1,0,0),sv_point(0,4.5,5)), leg_radius);
+	left_leg_cylinder = left_leg_cylinder.colour(SV_GREEN);
+	
+    sv_set left_leg_sphere_bottom = sphere(sv_point(0.75,4.5,5),leg_radius) ;
+    left_leg_sphere_bottom = left_leg_sphere_bottom.colour(SV_GREEN);
 	
 	// Teh result:
     sv_set result;	
 	result = ((android_body_cylinder - plane_top - plane_bottom) | (cuboid_bottom & sphere_bottom)) 
 			| ((head_sphere - head_plane) | (neck_cylinder - neck_plane_top - neck_plane_bottom))
-			| (((right_arm_cylinder | left_arm_cylinder) - arm_plane_top - arm_plane_bottom) | right_arm_sphere_top | right_arm_sphere_bottom | left_arm_sphere_top | left_arm_sphere_bottom);
+			| (((right_arm_cylinder | left_arm_cylinder) - arm_plane_top - arm_plane_bottom) | right_arm_sphere_top | right_arm_sphere_bottom | left_arm_sphere_top | left_arm_sphere_bottom)
+			| (((right_leg_cylinder | left_leg_cylinder) - leg_plane_top - leg_plane_bottom) | right_leg_sphere_bottom | left_leg_sphere_bottom);
 	
 	result = result.spin(sv_line(sv_point(0,0,1),sv_point(6,6,5)), M_PI/2);
 	
