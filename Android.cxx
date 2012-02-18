@@ -4,7 +4,8 @@
  *   Irina Voiculescu, 5 Feb 2010
  * 
  */ 
- 
+
+#define _USE_MATH_DEFINES
 #include "svlis.h" 
  
 #include "sv_cols.h" 
@@ -29,6 +30,7 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
 {
  
     //Cuboid is slightly smaller than parameters given in function
+    /*
     sv_point p = lowCorner + highCorner*0.2; 
     sv_point q = highCorner - highCorner*0.2; 
 
@@ -40,7 +42,7 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
     sv_set a_sphere = sphere(sv_point(5,5,5),4) ;
     a_sphere = a_sphere.colour(SV_RED);
 
-    sv_set a_line = sv_set(sv_line(sv_point(1,0,0),sv_point(6,6,5)));
+    sv_set a_line = sv_set(sv_line(sv_point(1,0,0),sv_point(8,6,5)));
     a_line = a_line.colour(SV_BLUE);
 
     sv_set plane_top = sv_set(sv_plane(sv_point(7,0,0), sv_point(7,5,5), sv_point(7,3,0)));
@@ -55,10 +57,10 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
 	sv_set sphere_bottom = sphere(sv_point(1,6,5),3) ;
     sphere_bottom = sphere_bottom.colour(SV_RED);
 
-    sv_set cylinder1 = cylinder(sv_line(sv_point(1,0,0),sv_point(6,6,5)), 3);
+    sv_set cylinder1 = cylinder(sv_line(sv_point(1,0,0),sv_point(8,6,5)), 3);
     cylinder1 = cylinder1.colour(SV_RED);
     
-    sv_set cylinder2 = cylinder(sv_line(sv_point(1,0,0),sv_point(6,6,5)), 2.5);
+    sv_set cylinder2 = cylinder(sv_line(sv_point(1,0,0),sv_point(8,6,5)), 2.5);
     cylinder2 = cylinder2.colour(SV_RED);
     
     sv_set torus_top = torus (sv_line(sv_point(1,0,0),sv_point(7,6,5)), 2.5, 0.5);
@@ -74,9 +76,84 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
     sv_set result;
     
     result = torus_top | (torus_handle - plane_handle) | (((cylinder1 - cylinder2) - plane_top - plane_bottom)) | (cuboid_bottom & sphere_bottom);
-
-    //result= a_cuboid; 
+	*/
+	
+	double radius = 3;
+	
+	// Construct the body:
+	sv_set android_body_cylinder = cylinder(sv_line(sv_point(1,0,0),sv_point(8,6,5)), radius);
+	android_body_cylinder = android_body_cylinder.colour(SV_GREEN);
+	
+	sv_set cuboid_bottom = cuboid(sv_point(2.5,3,2),sv_point(3.5,9,8));
+    cuboid_bottom = cuboid_bottom.colour(SV_GREEN);
     
+    sv_set plane_bottom = sv_set(sv_plane(sv_point(3,0,0), sv_point(3,3,0), sv_point(3,5,5)));
+    plane_bottom = plane_bottom.colour(SV_GREEN);
+
+	sv_set plane_top = sv_set(sv_plane(sv_point(8,0,0), sv_point(8,5,5), sv_point(8,3,0)));
+    plane_top = plane_top.colour(SV_WHEAT);
+
+	sv_set sphere_bottom = sphere(sv_point(3,6,5),radius);
+    sphere_bottom = sphere_bottom.colour(SV_GREEN);
+	
+	// Construct the head (and neck):
+	double neck_height = 0.25;
+	sv_set head_sphere = sphere(sv_point(8.25,6,5),radius) ;
+    head_sphere = head_sphere.colour(SV_GREEN);
+	
+	sv_set head_plane = sv_set(sv_plane(sv_point(8.25,0,0), sv_point(8.25,3,0), sv_point(8.25,5,5)));
+    head_plane = head_plane.colour(SV_GREEN);
+	
+	sv_set neck_cylinder = cylinder(sv_line(sv_point(1,0,0),sv_point(8.125,6,5)),2) ;
+    neck_cylinder = head_sphere.colour(SV_WHITE);
+	
+	sv_set neck_plane_top = sv_set(sv_plane(sv_point(8.25,0,0), sv_point(8.25,5,5), sv_point(8.25,3,0)));
+    neck_plane_top = neck_plane_top.colour(SV_WHITE);
+	
+	sv_set neck_plane_bottom = sv_set(sv_plane(sv_point(8,0,0), sv_point(8,3,0), sv_point(8,5,5)));
+    neck_plane_bottom = neck_plane_bottom.colour(SV_WHITE);
+	
+	// Construct the arms:
+	double arm_radius = 0.8;
+	
+	sv_set arm_plane_top = sv_set(sv_plane(sv_point(7,0,0), sv_point(7,5,5), sv_point(7,3,0)));
+    arm_plane_top = arm_plane_top.colour(SV_GREEN);
+	
+	sv_set arm_plane_bottom = sv_set(sv_plane(sv_point(3.5,0,0), sv_point(3.5,3,0), sv_point(3.5,5,5)));
+    arm_plane_bottom = arm_plane_bottom.colour(SV_GREEN);
+
+	//Right arm:	
+	sv_set right_arm_cylinder = cylinder(sv_line(sv_point(1,0,0),sv_point(0,10,5)), arm_radius);
+	right_arm_cylinder = right_arm_cylinder.colour(SV_GREEN);
+	
+    sv_set right_arm_sphere_top = sphere(sv_point(7,10,5),arm_radius) ;
+    right_arm_sphere_top = right_arm_sphere_top.colour(SV_GREEN);
+
+    sv_set right_arm_sphere_bottom = sphere(sv_point(3.5,10,5),arm_radius) ;
+    right_arm_sphere_bottom = right_arm_sphere_bottom.colour(SV_GREEN);
+	
+	// Left arm:	
+	sv_set left_arm_cylinder = cylinder(sv_line(sv_point(1,0,0),sv_point(0,2,5)), arm_radius);
+	left_arm_cylinder = left_arm_cylinder.colour(SV_GREEN);
+	
+	sv_set left_arm_sphere_top = sphere(sv_point(7,2,5),arm_radius) ;
+    left_arm_sphere_top = left_arm_sphere_top.colour(SV_GREEN);
+
+    sv_set left_arm_sphere_bottom = sphere(sv_point(3.5,2,5),arm_radius) ;
+    left_arm_sphere_bottom = left_arm_sphere_bottom.colour(SV_GREEN);
+	
+	// Construct the legs:
+	
+	
+	
+	// Teh result:
+    sv_set result;	
+	result = ((android_body_cylinder - plane_top - plane_bottom) | (cuboid_bottom & sphere_bottom)) 
+			| ((head_sphere - head_plane) | (neck_cylinder - neck_plane_top - neck_plane_bottom))
+			| (((right_arm_cylinder | left_arm_cylinder) - arm_plane_top - arm_plane_bottom) | right_arm_sphere_top | right_arm_sphere_bottom | left_arm_sphere_top | left_arm_sphere_bottom);
+	
+	result = result.spin(sv_line(sv_point(0,0,1),sv_point(6,6,5)), M_PI/2);
+	
     //result = a_sphere & a_cuboid; 
     
     //result = a_cuboid - a_sphere; 
@@ -103,7 +180,7 @@ int main(int argc, char **argv)
  
     // Define the corners of a box, then the box 
     sv_point b_lo = SV_OO; 
-    sv_point b_hi = sv_point(10,10,10); 
+    sv_point b_hi = sv_point(14,12,10); 
     sv_box mod_box = sv_box(b_lo,b_hi); 
  
     // Construct a model in the region of interest defined by (b_lo, b_hi)
