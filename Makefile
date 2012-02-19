@@ -6,9 +6,9 @@ OPTFLAGS = -g -O3
 LIBS = -lsvlis 
 PROGRAMS = CSGmug
 
-LIBS = -L/usr/lib64 -L/lib64 -L$(HOME)/SvLiS/lib -lsvlis -lglut -lGLU -lGL -lpthread
+LIBS = -L/usr/lib64 -L/lib64 -L$(HOME)/development-kits/SvLiS/lib -lsvlis -lglut -lGLU -lGL -lpthread
 
-CXXFLAGS = -DSV_UNIX -pedantic -Wno-write-strings -I/usr/include/svlis -I$(HOME)/SvLiS/include
+CXXFLAGS = -DSV_UNIX -pedantic -Wno-write-strings -I/usr/include/svlis -I$(HOME)/development-kits/SvLiS/include
 
 
 .SUFFIXES: .cxx .o

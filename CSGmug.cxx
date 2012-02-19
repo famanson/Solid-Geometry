@@ -4,7 +4,8 @@
  *   Irina Voiculescu, 5 Feb 2010
  * 
  */ 
- 
+
+#define _USE_MATH_DEFINES
 #include "svlis.h" 
  
 #include "sv_cols.h" 
@@ -46,35 +47,43 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
     sv_set plane_top = sv_set(sv_plane(sv_point(7,0,0), sv_point(7,5,5), sv_point(7,3,0)));
     plane_top = plane_top.colour(SV_WHEAT);
     
-    sv_set cuboid_bottom = cuboid(sv_point(0.5,3,2),sv_point(1.5,9,8));
-    cuboid_bottom = cuboid_bottom.colour(SV_RED);
+    sv_set cuboid_bottom = cuboid(sv_point(2,3,2),sv_point(3,9,8));
+    cuboid_bottom = cuboid_bottom.colour(SV_WHITE);
     
     sv_set plane_bottom = sv_set(sv_plane(sv_point(1,0,0), sv_point(1,3,0), sv_point(1,5,5)));
     plane_bottom = plane_bottom.colour(SV_WHEAT);
 
-	sv_set sphere_bottom = sphere(sv_point(1,6,5),3) ;
+	sv_set sphere_bottom = sphere(sv_point(3,6,5),2) ;
     sphere_bottom = sphere_bottom.colour(SV_RED);
 
-    sv_set cylinder1 = cylinder(sv_line(sv_point(1,0,0),sv_point(6,6,5)), 3);
+    sv_set cylinder1 = cylinder(sv_line(sv_point(1,0,0),sv_point(6,6,5)), 2);
     cylinder1 = cylinder1.colour(SV_RED);
     
-    sv_set cylinder2 = cylinder(sv_line(sv_point(1,0,0),sv_point(6,6,5)), 2.5);
-    cylinder2 = cylinder2.colour(SV_RED);
+    sv_set cuboid1 = cuboid(sv_point(2,3,2), sv_point(6,9,8));
+    cuboid1 = cuboid1.colour(SV_RED);
     
-    sv_set torus_top = torus (sv_line(sv_point(1,0,0),sv_point(7,6,5)), 2.5, 0.5);
-    torus_top = torus_top.colour(SV_RED);
+    sv_set cuboid2 = cuboid(sv_point(2,3,2), sv_point(6,9,8));
+    cuboid2 = cuboid2.colour(SV_RED);
     
-    sv_set torus_handle = torus (sv_line(sv_point(0,0,1),sv_point(4,3,5)), 2, 0.5);
+    sv_set cylinder2 = cylinder(sv_line(sv_point(1,0,0),sv_point(6,6,5)), 1.7);
+    cylinder2 = cylinder2.colour(SV_WHITE);
+    
+    sv_set torus_top = torus (sv_line(sv_point(1,0,0),sv_point(6,6,5)), 1.7, 0.3);
+    torus_top = torus_top.colour(SV_WHITE);
+    
+    sv_set torus_handle = torus (sv_line(sv_point(0,0,1),sv_point(4,4,5)), 1.2, 0.3);
     torus_handle = torus_handle.colour(SV_RED);
     
-    sv_set plane_handle = sv_set(sv_plane(sv_point(3,3,5), sv_point(0,3,0), sv_point(4,3,2)));
+    sv_set plane_handle = sv_set(sv_plane(sv_point(3,4,5), sv_point(4,4,2), sv_point(0,4,0)));
     plane_handle = plane_handle.colour(SV_WHEAT);
     
     //Experiment with different ways of using the cuboid, sphere, line and plane
     sv_set result;
     
-    result = torus_top | (torus_handle - plane_handle) | (((cylinder1 - cylinder2) - plane_top - plane_bottom)) | (cuboid_bottom & sphere_bottom);
-
+//    result = torus_top | (torus_handle - plane_handle) | (((cylinder1 - cylinder2) - plane_top - plane_bottom)) | (cuboid_bottom & sphere_bottom);
+    result = ((cylinder1 & cuboid1)- cylinder2) | torus_top | (cuboid_bottom & sphere_bottom) | (torus_handle & plane_handle);
+    //result = result.spin(sv_line(sv_point(0,0,1),sv_point(6,6,5)), M_PI/2);
+    
     //result= a_cuboid; 
     
     //result = a_sphere & a_cuboid; 
@@ -103,7 +112,7 @@ int main(int argc, char **argv)
  
     // Define the corners of a box, then the box 
     sv_point b_lo = SV_OO; 
-    sv_point b_hi = sv_point(10,10,10); 
+    sv_point b_hi = sv_point(12,10,10); 
     sv_box mod_box = sv_box(b_lo,b_hi); 
  
     // Construct a model in the region of interest defined by (b_lo, b_hi)
