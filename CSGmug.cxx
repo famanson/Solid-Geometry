@@ -67,7 +67,8 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
     // Teh result:
     sv_set result;
     
-    result = ((cylinder1 & cuboid1)- cylinder2) | torus_top | (cuboid_bottom & sphere_bottom) | (torus_handle & plane_handle) | torus_ring;
+    result = ((cylinder1 & cuboid1)- cylinder2) | torus_top | (cuboid_bottom & sphere_bottom) | 
+    		(torus_handle & plane_handle) | torus_ring;
     
     return result;
 }
