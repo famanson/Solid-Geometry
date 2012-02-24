@@ -28,22 +28,6 @@ static void my_reporter(sv_real progress)
 
 sv_set buildmymodel(sv_point lowCorner, sv_point highCorner) 
 {
- 
-    //Cuboid is slightly smaller than parameters given in function
-    sv_point p = lowCorner + highCorner*0.2; 
-    sv_point q = highCorner - highCorner*0.2; 
-
-    sv_set a_cuboid = cuboid(p,q);
-    a_cuboid = a_cuboid.colour(SV_GREEN); 
- 
-    sv_surface tex = sv_surface(); 
-
-    sv_set a_sphere = sphere(sv_point(5,5,5),4) ;
-    a_sphere = a_sphere.colour(SV_RED);
-
-    sv_set a_line = sv_set(sv_line(sv_point(1,0,0),sv_point(6,6,5)));
-    a_line = a_line.colour(SV_BLUE);
-
     sv_set plane_top = sv_set(sv_plane(sv_point(7,0,0), sv_point(7,5,5), sv_point(7,3,0)));
     plane_top = plane_top.colour(SV_WHEAT);
     

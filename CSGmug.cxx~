@@ -80,7 +80,7 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
     sv_set torus_ring = torus (sv_line(sv_point(1,0,0),sv_point(5.2,6,5)), 1.9,0.2);
     torus_ring = torus_ring.colour(SV_YELLOW);    
     
-    //Teh result:
+    // Teh result:
     sv_set result;
     
     result = ((cylinder1 & cuboid1)- cylinder2) | torus_top | (cuboid_bottom & sphere_bottom) | (torus_handle & plane_handle) | torus_ring;
