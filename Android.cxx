@@ -29,55 +29,6 @@ static void my_reporter(sv_real progress)
 sv_set buildmymodel(sv_point lowCorner, sv_point highCorner) 
 {
  
-    //Cuboid is slightly smaller than parameters given in function
-    /*
-    sv_point p = lowCorner + highCorner*0.2; 
-    sv_point q = highCorner - highCorner*0.2; 
-
-    sv_set a_cuboid = cuboid(p,q);
-    a_cuboid = a_cuboid.colour(SV_GREEN); 
- 
-    sv_surface tex = sv_surface(); 
-
-    sv_set a_sphere = sphere(sv_point(5,5,5),4) ;
-    a_sphere = a_sphere.colour(SV_RED);
-
-    sv_set a_line = sv_set(sv_line(sv_point(1,0,0),sv_point(8,6,5)));
-    a_line = a_line.colour(SV_BLUE);
-
-    sv_set plane_top = sv_set(sv_plane(sv_point(7,0,0), sv_point(7,5,5), sv_point(7,3,0)));
-    plane_top = plane_top.colour(SV_WHEAT);
-    
-    sv_set cuboid_bottom = cuboid(sv_point(0.5,3,2),sv_point(1.5,9,8));
-    cuboid_bottom = cuboid_bottom.colour(SV_RED);
-    
-    sv_set plane_bottom = sv_set(sv_plane(sv_point(1,0,0), sv_point(1,3,0), sv_point(1,5,5)));
-    plane_bottom = plane_bottom.colour(SV_WHEAT);
-
-	sv_set sphere_bottom = sphere(sv_point(1,6,5),3) ;
-    sphere_bottom = sphere_bottom.colour(SV_RED);
-
-    sv_set cylinder1 = cylinder(sv_line(sv_point(1,0,0),sv_point(8,6,5)), 3);
-    cylinder1 = cylinder1.colour(SV_RED);
-    
-    sv_set cylinder2 = cylinder(sv_line(sv_point(1,0,0),sv_point(8,6,5)), 2.5);
-    cylinder2 = cylinder2.colour(SV_RED);
-    
-    sv_set torus_top = torus (sv_line(sv_point(1,0,0),sv_point(7,6,5)), 2.5, 0.5);
-    torus_top = torus_top.colour(SV_RED);
-    
-    sv_set torus_handle = torus (sv_line(sv_point(0,0,1),sv_point(4,3,5)), 2, 0.5);
-    torus_handle = torus_handle.colour(SV_RED);
-    
-    sv_set plane_handle = sv_set(sv_plane(sv_point(3,3,5), sv_point(0,3,0), sv_point(4,3,2)));
-    plane_handle = plane_handle.colour(SV_WHEAT);
-    
-    //Experiment with different ways of using the cuboid, sphere, line and plane
-    sv_set result;
-    
-    result = torus_top | (torus_handle - plane_handle) | (((cylinder1 - cylinder2) - plane_top - plane_bottom)) | (cuboid_bottom & sphere_bottom);
-	*/
-	
 	double radius = 3;
 	
 	// Construct the body:
@@ -86,18 +37,6 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
 	
 	sv_set cuboid_body = cuboid(sv_point(2.5,3,2),sv_point(8,9,8));
     cuboid_body = cuboid_body.colour(SV_GREEN);
-	
-	/*sv_set cuboid_bottom = cuboid(sv_point(2.5,3,2),sv_point(3.5,9,8));
-    cuboid_bottom = cuboid_bottom.colour(SV_GREEN);
-    
-    sv_set plane_bottom = sv_set(sv_plane(sv_point(3,0,0), sv_point(3,3,0), sv_point(3,5,5)));
-    plane_bottom = plane_bottom.colour(SV_GREEN);
-
-	sv_set plane_top = sv_set(sv_plane(sv_point(8,0,0), sv_point(8,5,5), sv_point(8,3,0)));
-    plane_top = plane_top.colour(SV_WHEAT);
-
-	sv_set sphere_bottom = sphere(sv_point(3,6,5),radius);
-    sphere_bottom = sphere_bottom.colour(SV_GREEN);*/
 	
 	// Construct the head (and neck):
 	double neck_height = 0.25;
@@ -185,19 +124,6 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
 			| ((left_leg_cylinder & left_leg_cuboid) | left_leg_sphere_bottom);
 	result = result.spin(sv_line(sv_point(0,0,1),sv_point(6,6,5)), M_PI/2);
 	
-    //result = a_sphere & a_cuboid; 
-    
-    //result = a_cuboid - a_sphere; 
-
-    //result = a_cuboid | a_sphere;
-
-    //result = a_cuboid ^ a_sphere;
-    
-    //The next one isn't a solid
-    //result = a_cuboid ^ a_line;
-
-    //result = a_sphere & a_cuboid - plane;
-    
     return result;
 }
 

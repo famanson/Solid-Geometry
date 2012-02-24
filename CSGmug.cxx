@@ -56,7 +56,7 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
 	sv_set sphere_bottom = sphere(sv_point(3,6,5),2) ;
     sphere_bottom = sphere_bottom.colour(SV_RED);
 
-    sv_set cylinder1 = cylinder(sv_line(sv_point(1,0,0),sv_point(6,6,5)), 2);
+    sv_set cylinder1 = cylinder(sv_line(sv_point(1,0,0      ),sv_point(6,6,5)), 2);
     cylinder1 = cylinder1.colour(SV_RED);
     
     sv_set cuboid1 = cuboid(sv_point(2,3,2), sv_point(6,9,8));
@@ -77,27 +77,13 @@ sv_set buildmymodel(sv_point lowCorner, sv_point highCorner)
     sv_set plane_handle = sv_set(sv_plane(sv_point(3,4,5), sv_point(4,4,2), sv_point(0,4,0)));
     plane_handle = plane_handle.colour(SV_WHEAT);
     
-    //Experiment with different ways of using the cuboid, sphere, line and plane
+    sv_set torus_ring = torus (sv_line(sv_point(1,0,0),sv_point(5.2,6,5)), 1.9,0.2);
+    torus_ring = torus_ring.colour(SV_YELLOW);    
+    
+    // Teh result:
     sv_set result;
     
-//    result = torus_top | (torus_handle - plane_handle) | (((cylinder1 - cylinder2) - plane_top - plane_bottom)) | (cuboid_bottom & sphere_bottom);
-    result = ((cylinder1 & cuboid1)- cylinder2) | torus_top | (cuboid_bottom & sphere_bottom) | (torus_handle & plane_handle);
-    //result = result.spin(sv_line(sv_point(0,0,1),sv_point(6,6,5)), M_PI/2);
-    
-    //result= a_cuboid; 
-    
-    //result = a_sphere & a_cuboid; 
-    
-    //result = a_cuboid - a_sphere; 
-
-    //result = a_cuboid | a_sphere;
-
-    //result = a_cuboid ^ a_sphere;
-    
-    //The next one isn't a solid
-    //result = a_cuboid ^ a_line;
-
-    //result = a_sphere & a_cuboid - plane;
+    result = ((cylinder1 & cuboid1)- cylinder2) | torus_top | (cuboid_bottom & sphere_bottom) | (torus_handle & plane_handle) | torus_ring;
     
     return result;
 }
